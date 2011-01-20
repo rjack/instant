@@ -18,7 +18,6 @@ app.get("/", function (req, res) {
 
 
 app.get("/home", function (req, res) {
-	// TODO
 	res.render("home.jade", {
 		locals: {
 			page_title: "Home"
@@ -27,11 +26,14 @@ app.get("/home", function (req, res) {
 });
 
 
+/*
+ * Tracking pixel (an empty js file, actually)
+ */
 app.get("/collect", function (req, res) {
 	console.log(req.query);
-	// TODO send 1x1 pixel image
-	res.send(200);
+	res.send("", {"Content-Type": "text/javascript"}, 200);
 });
+
 
 app.listen(8000);
 
