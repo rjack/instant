@@ -1,3 +1,7 @@
+/*
+ * TODO socket.io must send data only to authenticated clients:
+ *      http://bit.ly/gHDJF7
+ */
 var express  = require("express"),
 	io = require('socket.io'),
 	app = express.createServer(),
