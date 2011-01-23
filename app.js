@@ -4,6 +4,7 @@
  */
 var express  = require("express"),
 	io = require('socket.io'),
+	querystring = require("querystring"),
 	app = express.createServer(),
 	analysts = [];
 
@@ -29,19 +30,35 @@ socket.on('connection', function(client) {
  */
 
 
+var urls = {
+	home: "/home",
+	collect: "/collect"
+};
+
+
+/*
+ * Helpers
+ */
+
+app.dynamicHelpers({
+	collect_url: function (req, res) {
+		// TODO
+	}
+});
+
 /*
  * ExpressJS routes
  */
 
 app.get("/", function (req, res) {
-	res.redirect("/home", 301);
+	res.redirect(urls.home, 301);
 });
 
 
-app.get("/home", function (req, res) {
+app.get(urls.home, function (req, res) {
 	res.render("home.jade", {
 		locals: {
-			page_title: "Home"
+			page_title: "Home",
 		}
 	});
 });
@@ -50,7 +67,7 @@ app.get("/home", function (req, res) {
 /*
  * Tracking pixel (an empty js file, actually)
  */
-app.get("/collect", function (req, res) {
+app.get(urls.collect, function (req, res) {
 	var i;
 	console.log(req.query);
 	res.send("", {"Content-Type": "text/javascript"}, 200);
