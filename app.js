@@ -28,6 +28,8 @@ socket.on('connection', function(client) {
 /*
  * TODO ExpressJS app.use setup (session, cache, gzip, etc.)
  */
+app.use(app.router);
+app.use(express.staticProvider(__dirname + "/static"));
 
 
 var urls = {
@@ -51,7 +53,7 @@ app.dynamicHelpers({
  */
 
 app.get("/", function (req, res) {
-	res.redirect(urls.home, 301);
+	res.redirect("/home", 301);
 });
 
 
