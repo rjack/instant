@@ -31,7 +31,7 @@ socket.on('connection', function(client) {
 
 
 var urls = {
-	home: "/home",
+	page: "/:page",
 	collect: "/collect"
 };
 
@@ -55,15 +55,6 @@ app.get("/", function (req, res) {
 });
 
 
-app.get(urls.home, function (req, res) {
-	res.render("home.jade", {
-		locals: {
-			page_title: "Home",
-		}
-	});
-});
-
-
 /*
  * Tracking pixel (an empty js file, actually)
  */
@@ -75,6 +66,16 @@ app.get(urls.collect, function (req, res) {
 		analysts[i].send(req.query);
 	}
 });
+
+
+app.get(urls.page, function (req, res) {
+	res.render("page.jade", {
+		locals: {
+			page_title: req.params.page
+		}
+	});
+});
+
 
 
 app.listen(8000);
