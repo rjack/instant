@@ -38,14 +38,17 @@ var urls = {
 };
 
 
+var pages = ["home", "about", "privacy-policy", "terms-of-use", "contact-us", "pricing", "download"];
+
 /*
  * Helpers
  */
 
 app.dynamicHelpers({
-	collect_url: function (req, res) {
-		// TODO
-	}
+});
+
+app.helpers({
+	pages: pages
 });
 
 /*
