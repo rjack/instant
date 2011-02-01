@@ -32,13 +32,6 @@ app.use(app.router);
 app.use(express.staticProvider(__dirname + "/static"));
 
 
-var urls = {
-	page: "/:page",
-	collect: "/collect"
-};
-
-
-var pages = ["home", "about", "privacy-policy", "terms-of-use", "contact-us", "pricing", "download"];
 
 /*
  * Helpers
@@ -48,22 +41,50 @@ app.dynamicHelpers({
 });
 
 app.helpers({
-	pages: pages
+	menu: null
 });
+
 
 /*
  * ExpressJS routes
  */
 
 app.get("/", function (req, res) {
-	res.redirect("/home", 301);
+	// TODO if logged redirect to /graph
+	// TODO if not logged redirect to /login
+	res.redirect("/graph", 301);
+});
+
+
+app.get("/signup", function (req, res) {
+	// TODO: signup form
+	res.redirect("/");
+});
+
+app.get("/login", function (req, res) {
+	// TODO: login form
+	res.redirect("/");
+});
+
+
+
+// TODO: authentication required
+app.get("/graph", function (req, res) {
+	res.render("graph.jade", {
+		locals: {
+			"page_title": "Graph"
+		}
+	});
 });
 
 
 /*
- * Tracking pixel (an empty js file, actually)
+ * Collect route
+ *
+ * Grab query string parameters and send back an empy js file.
+ * Send data to analysts via real-time socket.
  */
-app.get(urls.collect, function (req, res) {
+app.get("/collect", function (req, res) {
 	var i;
 	console.log(req.query);
 	res.send("", {"Content-Type": "text/javascript"}, 200);
@@ -71,16 +92,6 @@ app.get(urls.collect, function (req, res) {
 		analysts[i].send(req.query);
 	}
 });
-
-
-app.get(urls.page, function (req, res) {
-	res.render("page.jade", {
-		locals: {
-			page_title: req.params.page
-		}
-	});
-});
-
 
 
 app.listen(8000);

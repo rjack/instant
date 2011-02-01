@@ -1,14 +1,17 @@
 !!! 5
-html(lang: "it")
+html(lang: "en")
 	head
-		title= page_title
+		title= page_title + "| Instant"
+	body
+		- if (menu)
+			ul#menu
+				- each item in menu
+					li
+						a(href: "/" + item.display)= item.url
+
+		// use != so html is not escaped
+		#content!= body
+
 		script(type="text/javascript", src="/js/raphael.js")
 		script(type="text/javascript", src="/js/socket.io.js")
 		script(type="text/javascript", src="/js/analyst.js")
-	body
-		ul#menu
-			- each item in pages
-				li
-					a(href: "/" + item)= item
-		// use != so html is not escaped
-		#content!= body
