@@ -1,3 +1,29 @@
+function Page (name)
+{
+	var self = this;
+
+
+	self.moveTo = function (x, y)
+	{
+		self.x = x;
+		self.y = y;
+	};
+
+
+	self.move = function (inc_x, inc_y)
+	{
+		self.x += inc_x;
+		self.y += inc_y;
+	};
+
+
+	self.name = name;
+	self.vids = {};
+	self.visitors = {};
+}
+
+
+
 (function (global, io)
 {
 	var init_done = false,
@@ -21,11 +47,16 @@
 
 	self.onMessage = function (msg)
 	{
-		var name = msg.pageName;
+		var vid = msg.vid,
+			name = msg.pageName,
+			page;
+
 		if (!self.pages[name]) {
-			self.pages[name] = 0;
+			page = new Page(name);
+			page.addVisitor(vid);
+			self.pages[name] = page;
+			// dispatchEvent ("visitor-added")
 		}
-		self.pages[name]++;
 		console.log(self.pages);
 	};
 
@@ -35,6 +66,7 @@
 	global.INSTANT = self;
 
 }(window, io));
+
 
 (function ()
 {
